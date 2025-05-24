@@ -4,7 +4,7 @@
   "description": "Transcribe your speech to code with power of AI. Use it with Cursor to command AI create code efficiency and experience.",
   "version": "0.1.0",
   "publisher": "TopTuK",
-  "icon": "images/whisper-assistant.png",
+  "icon": "images/logo.jpg",
   "repository": {
     "type": "git",
     "url": "https://github.com/TopTuK/whisper-assistant-vscode.git"
@@ -40,9 +40,8 @@
       "properties": {
         "speak2script.apiProvider": {
           "type": "string",
-          "default": "localhost",
+          "default": "openai",
           "enum": [
-            "localhost",
             "openai",
             "groq"
           ],
@@ -50,13 +49,8 @@
         },
         "speak2script.apiKey": {
           "type": "string",
-          "default": "localhost-key-must-be-set",
-          "description": "API key for the selected provider (must be set for localhost)"
-        },
-        "speak2script.customEndpoint": {
-          "type": "string",
-          "default": "http://localhost:4444",
-          "description": "Custom endpoint URL (localhost only)"
+          "default": "",
+          "description": "API key for the selected provider"
         }
       }
     }

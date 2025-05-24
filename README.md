@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/martin-opensky/whisper-assistant-vscode/main/images/whisper-assistant.png" alt="Speak 2 Script">
+  <img src="https://raw.githubusercontent.com/toptuk/whisper-assistant-vscode/main/images/logo.jpg" alt="Speak 2 Script">
 </p>
 
 # Speak2Script: Trunscribe your voice to code
