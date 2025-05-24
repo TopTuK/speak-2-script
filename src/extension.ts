@@ -28,10 +28,9 @@ export const state: ExtensionState = {
 export async function activate(context: vscode.ExtensionContext) {
   try {
     // Create output channel and show it immediately
-    const outputChannel =
-      vscode.window.createOutputChannel('Whisper Assistant');
+    const outputChannel = vscode.window.createOutputChannel('Speak2Script');
     outputChannel.show(true); // Force show the output channel
-    outputChannel.appendLine('Activating Whisper Assistant...');
+    outputChannel.appendLine('Activating Speak2Script...');
     state.outputChannel = outputChannel;
 
     // Get the storage path for the extension
@@ -51,7 +50,7 @@ export async function activate(context: vscode.ExtensionContext) {
     );
     outputChannel.appendLine('Initialized SpeechTranscription');
 
-    // Check if Sox is installed (we still need this for recording)
+    // Check if Sox is installed (we need this for recording)
     const isSoxInstalled = await state.speechTranscription?.checkIfInstalled(
       'sox',
     );
@@ -91,7 +90,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // Create a new output channel if one doesn't exist
     if (!state.outputChannel) {
       state.outputChannel =
-        vscode.window.createOutputChannel('Whisper Assistant');
+        vscode.window.createOutputChannel('Speak2Script');
       state.outputChannel.show(true);
     }
     state.outputChannel.appendLine(errorMessage);
@@ -102,10 +101,9 @@ export async function activate(context: vscode.ExtensionContext) {
 export function initializeStatusBarItem(): void {
   // create a new status bar item that we can now manage
   state.myStatusBarItem = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Right,
-    1,
+    vscode.StatusBarAlignment.Right, 1,
   );
-  state.myStatusBarItem.command = 'whisperAssistant.toggleRecording';
+  state.myStatusBarItem.command = 'speak2script.toggleRecording';
   state.myStatusBarItem.show(); // Make sure the status bar item is shown
 }
 
@@ -123,7 +121,7 @@ export function initializeWorkspace(): void {
 
 function registerCommands(context: vscode.ExtensionContext): void {
   let toggleRecordingDisposable = vscode.commands.registerCommand(
-    'whisperAssistant.toggleRecording',
+    'speak2script.toggleRecording',
     toggleRecordingCommand,
   );
   context.subscriptions.push(toggleRecordingDisposable);
@@ -132,7 +130,7 @@ function registerCommands(context: vscode.ExtensionContext): void {
 export async function toggleRecordingCommand(): Promise<void> {
   if (!state.outputChannel) {
     state.outputChannel =
-      vscode.window.createOutputChannel('Whisper Assistant');
+      vscode.window.createOutputChannel('Speak2Script');
     state.outputChannel.show(true);
   }
   state.outputChannel.appendLine('Toggle recording command triggered');
@@ -157,7 +155,7 @@ export async function toggleRecordingCommand(): Promise<void> {
       updateStatusBarItem();
 
       // Get the current API provider
-      const config = vscode.workspace.getConfiguration('whisper-assistant');
+      const config = vscode.workspace.getConfiguration('speak-2-script');
       const provider = config.get<string>('apiProvider') || 'localhost';
       const message = `Transcribing using ${
         provider.charAt(0).toUpperCase() + provider.slice(1)
@@ -311,9 +309,9 @@ export function deactivate() {
   state.recordingStartTime = undefined;
 
   // Log the deactivation
-  console.log('Your extension "Whisper Assistant" is now deactivated');
+  console.log('Your extension "Speak2Script" is now deactivated');
 }
 
 export function initializeOutputChannel(): void {
-  state.outputChannel = vscode.window.createOutputChannel('Whisper Assistant');
+  state.outputChannel = vscode.window.createOutputChannel('Speak2Script');
 }

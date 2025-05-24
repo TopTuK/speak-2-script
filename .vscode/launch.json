@@ -25,7 +25,7 @@
       "outFiles": ["${workspaceFolder}/out/test/**/*.js"],
       "preLaunchTask": "${defaultBuildTask}",
       "env": {
-        "WHISPER_ASSISTANT_TEST": "true"
+        "SPEAK_SCRIPT_TEST": "true"
       }
     }
   ]

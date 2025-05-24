@@ -25,7 +25,7 @@ export interface Transcription {
 
 export type WhisperModel = 'whisper-1' | 'whisper-large-v3-turbo';
 
-type ApiProvider = 'localhost' | 'openai' | 'groq';
+type ApiProvider = 'openai' | 'groq';
 
 interface ApiConfig {
   baseURL: string;
@@ -33,9 +33,8 @@ interface ApiConfig {
 }
 
 const PROVIDER_MODELS: Record<ApiProvider, WhisperModel> = {
-  openai: 'whisper-1',
+  openai: 'whisper-1', // this is default for extension
   groq: 'whisper-large-v3-turbo',
-  localhost: 'whisper-1', // default to OpenAI model for localhost
 };
 
 class SpeechTranscription {
@@ -55,8 +54,8 @@ class SpeechTranscription {
   }
 
   private getApiConfig(): ApiConfig {
-    const config = vscode.workspace.getConfiguration('whisper-assistant');
-    const provider = config.get<ApiProvider>('apiProvider') || 'localhost';
+    const config = vscode.workspace.getConfiguration('speak-2-script');
+    const provider = config.get<ApiProvider>('apiProvider') || 'openai';
 
     const apiKey = config.get<string>('apiKey');
     if (!apiKey) {
@@ -64,8 +63,6 @@ class SpeechTranscription {
     }
 
     const baseURLs: Record<ApiProvider, string> = {
-      localhost:
-        (config.get('customEndpoint') || 'http://localhost:4444') + '/v1',
       openai: 'https://api.openai.com/v1',
       groq: 'https://api.groq.com/openai/v1',
     };
@@ -114,7 +111,7 @@ class SpeechTranscription {
           // Only show the initial configuration message
           if (!initialConfigShown && message.includes('Input File')) {
             this.outputChannel.appendLine(
-              `Whisper Assistant: SoX Configuration: ${message.trim()}`,
+              `Speak 2 Script: SoX Configuration: ${message.trim()}`,
             );
             initialConfigShown = true;
           }
@@ -122,45 +119,45 @@ class SpeechTranscription {
 
         this.recordingProcess.stdout?.on('data', (data) => {
           this.outputChannel.appendLine(
-            `Whisper Assistant: SoX stdout: ${data}`,
+            `Speak 2 Script: SoX stdout: ${data}`,
           );
         });
 
         this.recordingProcess.on('close', (code) => {
           if (code !== 0) {
             this.outputChannel.appendLine(
-              `Whisper Assistant: SoX process exited with code ${code}`,
+              `Speak 2 Script: SoX process exited with code ${code}`,
             );
           }
         });
       }
     } catch (error) {
-      this.outputChannel.appendLine(`Whisper Assistant: error: ${error}`);
+      this.outputChannel.appendLine(`Speak 2 Script: error: ${error}`);
     }
   }
 
   async stopRecording(): Promise<void> {
     if (!this.recordingProcess) {
       this.outputChannel.appendLine(
-        'Whisper Assistant: No recording process found',
+        'Speak 2 Script: No recording process found',
       );
       return;
     }
 
-    this.outputChannel.appendLine('Whisper Assistant: Stopping recording');
+    this.outputChannel.appendLine('Speak 2 Script: Stopping recording');
     this.recordingProcess.kill('SIGTERM');
     this.recordingProcess = null;
   }
 
   async transcribeRecording(): Promise<Transcription | undefined> {
-    const config = vscode.workspace.getConfiguration('whisper-assistant');
-    const provider = config.get<ApiProvider>('apiProvider') || 'localhost';
+    const config = vscode.workspace.getConfiguration('speak-2-script');
+    const provider = config.get<ApiProvider>('apiProvider') || 'openai';
 
     const apiConfig = this.getApiConfig();
 
     try {
       this.outputChannel.appendLine(
-        `Whisper Assistant: Transcribing recording using ${provider} API`,
+        `Speak 2 Script: Transcribing recording using ${provider} API`,
       );
 
       const audioFile = fs.createReadStream(
@@ -170,7 +167,7 @@ class SpeechTranscription {
       const model = PROVIDER_MODELS[provider];
 
       this.outputChannel.appendLine(
-        `Whisper Assistant: Using model ${model} for ${provider}`,
+        `Speak 2 Script: Using model ${model} for ${provider}`,
       );
 
       const openai = new OpenAI(apiConfig);
@@ -210,7 +207,7 @@ class SpeechTranscription {
       );
 
       this.outputChannel.appendLine(
-        `Whisper Assistant: Transcription: ${result.text}`,
+        `Speak 2 Script: Transcription: ${result.text}`,
       );
 
       if (result?.text?.length === 0) {
@@ -221,20 +218,16 @@ class SpeechTranscription {
     } catch (error) {
       // Log the error to output channel
       this.outputChannel.appendLine(
-        `Whisper Assistant: error: ${error} (apiConfig.baseURL: ${apiConfig.baseURL})`,
+        `Speak 2 Script: error: ${error} (apiConfig.baseURL: ${apiConfig.baseURL})`,
       );
 
-      if (provider === 'localhost') {
-        vscode.window.showErrorMessage(
-          'Whisper Assistant: Ensure local Whisper server is running.',
-        );
-      } else if (error instanceof Error) {
+      if (error instanceof Error) {
         // Format the error message to be more user-friendly
         const errorMessage = error.message
           .replace(/\bError\b/i, '') // Remove redundant "Error" word
           .trim();
 
-        vscode.window.showErrorMessage(`Whisper Assistant: ${errorMessage}`);
+        vscode.window.showErrorMessage(`Speak 2 Script: ${errorMessage}`);
       }
 
       return undefined;
@@ -254,7 +247,7 @@ class SpeechTranscription {
       }
     } catch (error) {
       this.outputChannel.appendLine(
-        `Whisper Assistant: Error deleting files: ${error}`,
+        `Speak 2 Script: Error deleting files: ${error}`,
       );
     }
   }
@@ -267,7 +260,7 @@ class SpeechTranscription {
       }
     } catch (error) {
       this.outputChannel.appendLine(
-        `Whisper Assistant: Error cleaning up: ${error}`,
+        `Speak 2 Script: Error cleaning up: ${error}`,
       );
     }
   }
