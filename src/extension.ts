@@ -30,6 +30,7 @@ export async function activate(context: vscode.ExtensionContext) {
     // Create output channel and show it immediately
     const outputChannel = vscode.window.createOutputChannel('speak2script');
     outputChannel.show(true); // Force show the output channel
+    
     outputChannel.appendLine('Activating Speak2Script...');
     state.outputChannel = outputChannel;
 
@@ -59,10 +60,10 @@ export async function activate(context: vscode.ExtensionContext) {
         isSoxInstalled ? 'installed' : 'not installed'
       }`,
     );
+    console.log('Sox installation status:', isSoxInstalled);
 
     if (!isSoxInstalled) {
-      const message =
-        'SoX is not installed. Please install Sox for this extension to work properly.';
+      const message = 'SoX is not installed. Please install Sox for this extension to work properly.';
       vscode.window.showErrorMessage(message);
       outputChannel.appendLine(message);
     }
@@ -108,6 +109,7 @@ export function initializeStatusBarItem(): void {
 
 export function initializeWorkspace(): void {
   const workspaceFolders = vscode.workspace.workspaceFolders;
+  
   if (workspaceFolders !== undefined) {
     state.workspacePath = workspaceFolders[0].uri.fsPath;
     const whisperDir = `${state.workspacePath}/.speak2script`;

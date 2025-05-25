@@ -2,7 +2,7 @@
   "name": "speak2script",
   "displayName": "Speak2Script",
   "description": "Transcribe your speech to code with power of AI. Use it with Cursor to command AI create code efficiency and experience.",
-  "version": "0.3.0",
+  "version": "1.0.1",
   "publisher": "TopTuK",
   "icon": "images/logo.jpg",
   "repository": {
@@ -66,6 +66,9 @@
     "publish": "vsce package && vsce publish",
     "clean": "rm -rf out .vscode-test"
   },
+  "dependencies": {
+    "openai": "^4.103.0"
+  },
   "devDependencies": {
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
@@ -77,10 +80,6 @@
     "eslint": "^8.47.0",
     "glob": "^10.3.3",
     "mocha": "^10.2.0",
-    "openai": "^4.90.0",
     "typescript": "^5.1.6"
-  },
-  "dependencies": {
-    "openai": "^4.90.0"
   }
 }
