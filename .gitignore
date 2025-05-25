@@ -6,3 +6,4 @@ node_modules
 /.whisper
 /.speak2script
 .vscode/settings.json
+.DS_Store
