@@ -55,7 +55,7 @@ class SpeechTranscription {
   }
 
   private getApiConfig(): ApiConfig {
-    const config = vscode.workspace.getConfiguration('speak-2-script');
+    const config = vscode.workspace.getConfiguration('speak2script');
     const provider = config.get<ApiProvider>('apiProvider') || 'openai';
 
     const apiKey = config.get<string>('apiKey');
@@ -151,7 +151,7 @@ class SpeechTranscription {
   }
 
   async transcribeRecording(): Promise<Transcription | undefined> {
-    const config = vscode.workspace.getConfiguration('speak-2-script');
+    const config = vscode.workspace.getConfiguration('speak2script');
     const provider = config.get<ApiProvider>('apiProvider') || 'openai';
 
     const apiConfig = this.getApiConfig();

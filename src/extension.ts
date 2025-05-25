@@ -28,7 +28,7 @@ export const state: ExtensionState = {
 export async function activate(context: vscode.ExtensionContext) {
   try {
     // Create output channel and show it immediately
-    const outputChannel = vscode.window.createOutputChannel('Speak2Script');
+    const outputChannel = vscode.window.createOutputChannel('speak2script');
     outputChannel.show(true); // Force show the output channel
     outputChannel.appendLine('Activating Speak2Script...');
     state.outputChannel = outputChannel;
@@ -89,8 +89,7 @@ export async function activate(context: vscode.ExtensionContext) {
     console.error(errorMessage);
     // Create a new output channel if one doesn't exist
     if (!state.outputChannel) {
-      state.outputChannel =
-        vscode.window.createOutputChannel('Speak2Script');
+      state.outputChannel = vscode.window.createOutputChannel('speak2script');
       state.outputChannel.show(true);
     }
     state.outputChannel.appendLine(errorMessage);
@@ -129,8 +128,7 @@ function registerCommands(context: vscode.ExtensionContext): void {
 
 export async function toggleRecordingCommand(): Promise<void> {
   if (!state.outputChannel) {
-    state.outputChannel =
-      vscode.window.createOutputChannel('Speak2Script');
+    state.outputChannel = vscode.window.createOutputChannel('speak2script');
     state.outputChannel.show(true);
   }
   state.outputChannel.appendLine('Toggle recording command triggered');
@@ -155,7 +153,7 @@ export async function toggleRecordingCommand(): Promise<void> {
       updateStatusBarItem();
 
       // Get the current API provider
-      const config = vscode.workspace.getConfiguration('speak-2-script');
+      const config = vscode.workspace.getConfiguration('speak2script');
       const provider = config.get<string>('apiProvider') || 'localhost';
       const message = `Transcribing using ${
         provider.charAt(0).toUpperCase() + provider.slice(1)
@@ -313,5 +311,5 @@ export function deactivate() {
 }
 
 export function initializeOutputChannel(): void {
-  state.outputChannel = vscode.window.createOutputChannel('Speak2Script');
+  state.outputChannel = vscode.window.createOutputChannel('speak2script');
 }
