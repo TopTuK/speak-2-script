@@ -2,7 +2,7 @@
   "name": "speak2script",
   "displayName": "Speak2Script",
   "description": "Transcribe your speech to code with power of AI. Use it with Cursor to command AI create code efficiency and experience.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "TopTuK",
   "icon": "images/logo.jpg",
   "repository": {
