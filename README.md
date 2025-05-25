@@ -48,7 +48,7 @@ Once initialization is complete, a quote icon will appear in the bottom right st
 
 2. **Starting the Recording**: Activate the extension by clicking on the quote icon or using the shortcut `Command+M` (for Mac) or `Control+M` (for Windows). You can record for as long as you like, but remember, the longer the recording, the longer the transcription process. The recording time will be displayed in the status bar.
 
-  <img src="https://raw.githubusercontent.com/mtoptuk/speak-2-script/main/images/recording.png" alt="Recording icon" style="width: 100px; height: auto;">
+  <img src="https://raw.githubusercontent.com/toptuk/speak-2-script/main/images/recording.png" alt="Recording icon" style="width: 100px; height: auto;">
 
 3. **Stopping the Recording**: Stop the recording using the same shortcut (`Command+M` or `Control+M`). The extension icon in the status bar will change to a loading icon, and a progress message will be displayed, indicating that the transcription is underway.
 
