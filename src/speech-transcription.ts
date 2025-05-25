@@ -48,6 +48,7 @@ class SpeechTranscription {
   ) {
     // Create a temp directory within the storage path
     this.tempDir = path.join(this.storagePath, 'temp');
+    
     if (!fs.existsSync(this.tempDir)) {
       fs.mkdirSync(this.tempDir, { recursive: true });
     }
